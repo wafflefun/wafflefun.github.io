@@ -18,7 +18,7 @@ window.ECOSISTEMAS = [
   ]},
   { nombre: 'Agilidad / Precisión', emoji: '🎯', juegos: [
     { n: 'No pares el cursor',   e: '🎯', u: BASE + 'noparess/' },
-    { n: 'No aprietes el botón', e: '🔘', pronto: true },
+    { n: 'No toques la pared',   e: '🧱', u: BASE + 'ntlp/' },
     { n: 'Pelota saltarina',     e: '🏀', pronto: true }
   ]}
   // AGREGAR: un nuevo ecosistema completo aquí (copia uno de arriba)
