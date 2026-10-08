@@ -56,3 +56,65 @@ window.PORTADA = BASE;
   }
   document.body ? go() : addEventListener('DOMContentLoaded', go);
 })();
+/* ===== MÚSICA DE LA PORTADA ===== */
+(function () {
+  // Solo funciona en la página principal
+  if (!document.documentElement.hasAttribute('data-portal')) return;
+
+  function iniciarMusica() {
+    const audio = document.createElement('audio');
+
+    audio.src = 'coin_slot_serenade.mp3';
+    audio.loop = true;
+    audio.preload = 'auto';
+
+    const boton = document.createElement('button');
+
+    boton.textContent = '🎵';
+    boton.setAttribute('aria-label', 'Activar música');
+
+    const css = `
+      .wf-musica {
+        position: fixed;
+        right: 16px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+        z-index: 9998;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.3);
+        background: rgba(30,24,60,.85);
+        color: white;
+        font-size: 1.3rem;
+        cursor: pointer;
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+      }
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+
+    boton.className = 'wf-musica';
+
+    boton.onclick = () => {
+      if (audio.paused) {
+        audio.play();
+        boton.textContent = '🔊';
+        boton.setAttribute('aria-label', 'Apagar música');
+      } else {
+        audio.pause();
+        boton.textContent = '🎵';
+        boton.setAttribute('aria-label', 'Activar música');
+      }
+    };
+
+    document.body.appendChild(audio);
+    document.body.appendChild(boton);
+  }
+
+  document.body
+    ? iniciarMusica()
+    : addEventListener('DOMContentLoaded', iniciarMusica);
+})();
