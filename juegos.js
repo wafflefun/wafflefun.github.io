@@ -1,4 +1,5 @@
 /* ===== juegos.js · LISTA CENTRAL DE JUEGOS =====
+   Los ecosistemas son solo para ordenar entre nosotros: NO se muestran en el portal ni en el menú.
    Edita SOLO este archivo para agregar o cambiar juegos: se actualizan
    el portal y el botón "¡Aquí hay más!" de todos tus juegos a la vez.
 
@@ -39,7 +40,6 @@ window.PORTADA = BASE;
 
     let h = '<button class="ma-x" aria-label="Cerrar">✕</button><h2>¡Aquí hay más!</h2><a href="' + PORTADA + '">🏠 Portada</a>';
     for (const g of ECOSISTEMAS) {
-      h += '<h3>' + g.emoji + ' ' + g.nombre + '</h3>';
       for (const j of g.juegos) {
         if (j.pronto) h += '<span class="s">' + j.e + ' ' + j.n + ' · Próximamente</span>';
         else h += '<a href="' + j.u + '"' + (location.href.indexOf(j.u) === 0 ? ' class="here"' : '') + '>' + j.e + ' ' + j.n + '</a>';
