@@ -12,7 +12,8 @@ window.ECOSISTEMAS = [
   { nombre: 'Social / Personalidad', emoji: '🎭', juegos: [
     { n: 'El Gusano',        e: '🐛', u: BASE + 'gusanoloco/' },
     { n: 'Tu nivel de caos', e: '🌀', u: BASE + 'tucaos/' },
-    { n: 'Crea tu monstruo', e: '👾', u: BASE + 'tumonstruo/' }
+    { n: 'Crea tu monstruo', e: '👾', u: BASE + 'tumonstruo/' },
+    { n: 'Crea tu villano',  e: '😈', u: BASE + 'tuvillano/' }
     // AGREGAR: más juegos de este ecosistema aquí
   ]},
   { nombre: 'Agilidad / Precisión', emoji: '🎯', juegos: [
