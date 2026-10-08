@@ -44,14 +44,10 @@
   @keyframes sube { from{opacity:0;transform:translateY(34px) scale(.9)} to{opacity:1;transform:none} }
 
   /* --- Ecosistemas y tarjetas (aparecen una tras otra) --- */
-  .eco { margin-top:24px; padding:16px; border-radius:22px; background:rgba(34,24,72,.78);
-         border:2px solid var(--a); box-shadow:0 0 24px -6px var(--a);
-         animation:sube .7s cubic-bezier(.2,1.2,.4,1) both; animation-delay:calc(1s + var(--i)*.18s); }
-  .eco h2 { margin:0 0 12px; font-size:1.05rem; color:var(--a); }
   .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
   .card { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; min-height:106px; padding:12px;
           border-radius:16px; background:rgba(255,255,255,.09); color:var(--ink); text-decoration:none; text-align:center; font-weight:700;
-          border:1px solid rgba(255,255,255,.14); transition:transform .2s, background .2s;
+          border:2px solid var(--a); box-shadow:0 0 16px -8px var(--a); transition:transform .2s, background .2s;
           animation:sube .6s cubic-bezier(.2,1.2,.4,1) both; animation-delay:calc(1.2s + var(--k)*.09s); }
   .card .em { font-size:2.2rem; transition:transform .25s; }
   a.card:hover { transform:translateY(-4px) rotate(-1deg); background:rgba(255,255,255,.16); }
@@ -73,7 +69,7 @@
     <div class="float"><div class="pop" id="pop"><img class="logo" id="logo" src="logo.png" alt="WaffleFun, un waffle sonriente"></div></div>
     <p class="frase" id="frase">Toca el waffle 👆</p>
   </div>
-  <div id="lista"></div>
+  <div id="lista" style="margin-top:22px"></div>
   <!-- AGREGAR: aquí puede ir el botón "invítame un café" (Ko-fi) o publicidad -->
   <footer>Hecho con cariño · más juguetes pronto</footer>
 </main>
@@ -83,18 +79,18 @@
   const FRASES = ['¡Hola! 👋', '¡Waffle power! 🧇', '¿Jugamos? 🎮', '¡Más sirope! 🍯', '¡Eso cosquillea! 😆'];  // CAMBIAR/AGREGAR: frases al tocar el logo
   const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Tarjetas, dibujadas desde juegos.js
-  let k = 0, h = '';
-  ECOSISTEMAS.forEach((g, i) => {
-    h += '<section class="eco" style="--a:' + COLS[i % 4] + ';--i:' + i + '"><h2>' + g.emoji + ' ' + g.nombre + '</h2><div class="grid">';
+  // Tarjetas, dibujadas desde juegos.js (todas juntas, sin mostrar ecosistemas; cada una con un color del logo)
+  let k = 0, h = '<div class="grid">';
+  ECOSISTEMAS.forEach(g => {
     for (const j of g.juegos) {
+      const st = ' style="--k:' + k + ';--a:' + COLS[k % 4] + '"';
       h += j.pronto
-        ? '<div class="card soon" style="--k:' + (k++) + '"><span class="em">' + j.e + '</span>' + j.n + '<small>Próximamente</small></div>'
-        : '<a class="card" style="--k:' + (k++) + '" href="' + j.u + '"><span class="em">' + j.e + '</span>' + j.n + '</a>';
+        ? '<div class="card soon"' + st + '><span class="em">' + j.e + '</span>' + j.n + '<small>Próximamente</small></div>'
+        : '<a class="card"' + st + ' href="' + j.u + '"><span class="em">' + j.e + '</span>' + j.n + '</a>';
+      k++;
     }
-    h += '</div></section>';
   });
-  document.getElementById('lista').innerHTML = h;
+  document.getElementById('lista').innerHTML = h + '</div>';
 
   // Bolitas flotando de fondo + confeti
   const cv = document.getElementById('fx'), x = cv.getContext('2d');
