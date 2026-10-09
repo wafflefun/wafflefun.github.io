@@ -13,12 +13,14 @@ window.ECOSISTEMAS = [
     { n: 'El Gusano',        e: '🐛', u: BASE + 'gusanoloco/' },
     { n: 'Tu nivel de caos', e: '🌀', u: BASE + 'tucaos/' },
     { n: 'Crea tu monstruo', e: '👾', u: BASE + 'tumonstruo/' },
-    { n: 'Crea tu villano',  e: '😈', u: BASE + 'tuvillano/' }
+    { n: 'Crea tu villano',  e: '😈', u: BASE + 'tuvillano/' },
+    { n: 'Tu edad mental',   e: '🧠', u: BASE + 'tuedadmental/' }   // CAMBIAR: 'tuedadmental/' = nombre del repo de este juego
     // AGREGAR: más juegos de este ecosistema aquí
   ]},
   { nombre: 'Agilidad / Precisión', emoji: '🎯', juegos: [
     { n: 'No pares el cursor',   e: '🎯', u: BASE + 'noparess/' },
     { n: 'No toques la pared',   e: '🧱', u: BASE + 'ntlp/' },
+    { n: 'Waffle Drop Café',     e: '🧇', u: BASE + 'waffledropcafe/' },   // CAMBIAR: 'waffledropcafe/' = nombre del repo de este juego
     { n: 'Pelota saltarina',     e: '🏀', pronto: true }
   ]}
   // AGREGAR: un nuevo ecosistema completo aquí (copia uno de arriba)
