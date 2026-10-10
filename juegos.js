@@ -22,6 +22,7 @@ window.ECOSISTEMAS = [
     { n: 'No toques la pared',   e: '🧱', u: BASE + 'ntlp/' },
     { n: 'Waffle Drop Café',     e: '🧇', u: BASE + 'waffletower/' },   // CAMBIAR: 'waffletower/' = nombre del repo de este juego
     { n: 'Waffle Launcher', e: '🧇🚀', u: BASE + 'wafflelauncher/' },
+    { n: 'Waffle Chef',e:'👨‍🍳🧇', u:BASE+'wafflechef/'},
   ]}
   // AGREGAR: un nuevo ecosistema completo aquí (copia uno de arriba)
 ];
