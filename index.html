@@ -2,8 +2,11 @@
 <!--
   ===== PORTAL WAFFLEFUN · GUÍA RÁPIDA =====
   Los juegos NO se agregan aquí: se agregan en juegos.js (mismo repositorio).
-  Este archivo necesita estar junto a logo.png y juegos.js.
+  Este archivo necesita estar junto a: logo.png, juegos.js y las 8 imágenes btn-*.png (todo plano, sin carpetas).
   Busca "CAMBIAR:" (colores, frases, tiempos) y "AGREGAR:" (ideas para sumar).
+
+  Cómo se ven los botones: cada juego usa una imagen de la lista BTNS (más abajo), en orden.
+  Si tienes más de 8 juegos, las imágenes se repiten solas desde la primera.
 -->
 <html lang="es" data-portal>
 <head>
@@ -18,97 +21,139 @@
 <link rel="icon" href="logo.png">
 <style>
   /* CAMBIAR: colores del portal (c1..c4 son los colores del logo) */
-  :root { --bg:#140d2e; --ink:#fff7e6; --mut:rgba(255,247,230,.72); --c1:#ffc933; --c2:#2aa3ff; --c3:#ff5b8a; --c4:#9bd13d; }
+  :root { --bg:#3b1d0e; --bg2:#2a1309; --ink:#fff7e6; --mut:rgba(255,247,230,.75); --brown:#4a2210;
+          --c1:#ffc933; --c2:#2aa3ff; --c3:#ff5b8a; --c4:#9bd13d; }
   * { box-sizing: border-box; }
+
+  /* --- Fondo chocolate con cuadritos de waffle --- */
+  /* CAMBIAR: 64px = tamaño de los cuadritos; los rgba son qué tan marcadas se ven las líneas */
   body { margin:0; min-height:100vh; color:var(--ink); overflow-x:hidden;
-         font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-         background:radial-gradient(circle at 50% 0%,rgba(255,201,51,.3),transparent 55%),
-                    radial-gradient(circle at 85% 100%,rgba(42,163,255,.25),transparent 50%), var(--bg);
-         padding:calc(env(safe-area-inset-top,0px) + 18px) 16px calc(env(safe-area-inset-bottom,0px) + 28px); }
+         font-family:"ui-rounded","Arial Rounded MT Bold","Nunito","Baloo 2",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+         background:
+           radial-gradient(circle at 50% 0%,rgba(255,201,51,.16),transparent 55%),
+           radial-gradient(circle at 50% 110%,rgba(0,0,0,.45),transparent 60%),
+           linear-gradient(90deg,rgba(0,0,0,.2) 0 7px,transparent 7px) 0 0/64px 64px,
+           linear-gradient(0deg,rgba(0,0,0,.2) 0 7px,transparent 7px) 0 0/64px 64px,
+           var(--bg);
+         padding:calc(env(safe-area-inset-top,0px) + 18px) 14px calc(env(safe-area-inset-bottom,0px) + 28px); }
   #fx { position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
   main { position:relative; z-index:1; max-width:560px; margin:0 auto; }
   .sr { position:absolute; left:-9999px; }
+
+  /* --- Waffles decorativos en las esquinas --- */
+  /* CAMBIAR: tamaño (width/height), posición (top/left/right/bottom) y giro (rotate) de cada uno */
+  .wc { position:fixed; width:110px; height:110px; border-radius:20px; z-index:0; pointer-events:none;
+        background:
+          linear-gradient(90deg,rgba(190,100,0,.55) 0 8px,transparent 8px) 0 0/27px 27px,
+          linear-gradient(0deg,rgba(190,100,0,.55) 0 8px,transparent 8px) 0 0/27px 27px,
+          linear-gradient(145deg,#ffd75e,#f5a31a);
+        border:4px solid #5a2c10; box-shadow:0 6px 0 rgba(0,0,0,.25); }
+  .wc.a { top:-34px; left:-34px; transform:rotate(-22deg); }
+  .wc.b { top:-40px; right:-40px; transform:rotate(24deg); }
+  .wc.c { bottom:-44px; left:-40px; transform:rotate(18deg); }
+  .wc.d { bottom:-40px; right:-36px; transform:rotate(-26deg); }
 
   /* --- Logo: entra rebotando, flota, y al tocarlo se aplasta y suelta confeti --- */
   .hero { text-align:center; }
   .float { display:inline-block; animation:flota 4s ease-in-out 1.2s infinite; }       /* CAMBIAR: 4s = velocidad de flotar */
   .pop.tap { animation:squish .5s ease; }
-  .logo { display:block; width:min(76vw,330px); height:auto; cursor:pointer; -webkit-tap-highlight-color:transparent;
-          filter:drop-shadow(0 10px 22px rgba(255,201,51,.4));
+  .logo { display:block; width:min(72vw,310px); height:auto; cursor:pointer; -webkit-tap-highlight-color:transparent;
+          filter:drop-shadow(0 8px 0 rgba(0,0,0,.25)) drop-shadow(0 10px 22px rgba(255,201,51,.35));
           animation:entra 1.1s cubic-bezier(.2,1.5,.4,1) both; }                          /* CAMBIAR: 1.1s = duración de la entrada */
-  .frase { min-height:1.6em; margin:4px 0 0; color:var(--mut); font-weight:600; }
+  .frase { display:inline-block; min-height:1.6em; margin:2px 0 0; padding:8px 22px; border-radius:999px;
+           background:rgba(30,12,5,.7); border:2px solid rgba(255,255,255,.1); color:var(--ink); font-weight:800; }
 
   @keyframes entra { 0%{transform:translateY(-140px) scale(.4) rotate(-14deg);opacity:0} 55%{opacity:1} 100%{transform:none;opacity:1} }
   @keyframes flota { 50%{transform:translateY(-9px) rotate(1.5deg)} }
   @keyframes squish { 30%{transform:scale(1.15,.82)} 60%{transform:scale(.92,1.1)} 100%{transform:none} }
   @keyframes sube { from{opacity:0;transform:translateY(34px) scale(.9)} to{opacity:1;transform:none} }
 
-  /* --- Ecosistemas y tarjetas (aparecen una tras otra) --- */
-  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
-  .card { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; min-height:106px; padding:12px;
-          border-radius:16px; background:rgba(255,255,255,.09); color:var(--ink); text-decoration:none; text-align:center; font-weight:700;
-          border:2px solid var(--a); box-shadow:0 0 16px -8px var(--a); transition:transform .2s, background .2s;
-          animation:sube .6s cubic-bezier(.2,1.2,.4,1) both; animation-delay:calc(1.2s + var(--k)*.09s); }
-  .card .em { font-size:2.2rem; transition:transform .25s; }
-  a.card:hover { transform:translateY(-4px) rotate(-1deg); background:rgba(255,255,255,.16); }
-  a.card:hover .em { transform:scale(1.25) rotate(-10deg); }
-  a.card:active { transform:scale(.94); }
-  a.card:focus-visible { outline:3px solid var(--a); outline-offset:2px; }
-  .card.soon { opacity:.5; font-weight:500; border-style:dashed; }
-  .card small { color:var(--mut); font-weight:400; }
-  footer { margin-top:30px; text-align:center; color:var(--mut); font-size:.85rem; }
+  /* --- Botones waffle (la imagen va de fondo; el emoji, el nombre y la flecha van encima) --- */
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px 8px; }
+  .card { position:relative; display:flex; align-items:center; gap:4px; width:100%; aspect-ratio:609/240;
+          padding:0 6% 5% 7.5%; color:var(--ink); text-decoration:none; -webkit-tap-highlight-color:transparent;
+          background:var(--img) center/100% 100% no-repeat;
+          transition:transform .15s, filter .2s;
+          animation:sube .6s cubic-bezier(.2,1.2,.4,1) both; animation-delay:calc(1.2s + var(--k)*.09s); }  /* CAMBIAR: .09s = pausa entre botón y botón al aparecer */
+  .card .em { flex:none; width:clamp(26px,9vw,46px); font-size:clamp(1.4rem,6.4vw,2.2rem); line-height:1; text-align:center;
+              filter:drop-shadow(0 2px 0 rgba(0,0,0,.35)); transition:transform .25s; }
+  .card .em img { width:100%; height:auto; display:block; }      /* AGREGAR: en juegos.js, en vez del emoji puedes poner el nombre de una imagen, ej: "gusano.png" */
+  .card .tx { flex:1; min-width:0; font-weight:900; font-size:clamp(.68rem,3.45vw,1.2rem); line-height:1.02; text-wrap:balance;
+              color:#fff7e6; letter-spacing:0;
+              text-shadow:-1.5px -1.5px 0 var(--brown),1.5px -1.5px 0 var(--brown),-1.5px 1.5px 0 var(--brown),1.5px 1.5px 0 var(--brown),
+                          0 1.5px 0 var(--brown),0 -1.5px 0 var(--brown),1.5px 0 0 var(--brown),-1.5px 0 0 var(--brown),0 3px 3px rgba(0,0,0,.35); }
+  .card .tx small { display:block; margin-top:2px; font-size:.7em; font-weight:700; }
+  .card .go { flex:none; width:clamp(16px,5vw,26px); aspect-ratio:1; border-radius:50%; background:var(--brown);
+              display:grid; place-items:center; font-size:clamp(.7rem,3.2vw,1.15rem); font-weight:900; line-height:1; padding-bottom:.08em; }
+  a.card:hover { filter:brightness(1.08); transform:translateY(-3px) rotate(-.6deg); }
+  a.card:hover .em { transform:scale(1.15) rotate(-8deg); }
+  a.card:active { transform:translateY(4px) scale(.96,.93); filter:brightness(.95); }   /* CAMBIAR: efecto "el waffle se hunde" al tocar */
+  a.card:focus-visible { outline:3px solid #fff; outline-offset:2px; border-radius:30px; }
+  .card.soon { opacity:.55; filter:grayscale(.35); }
+  footer { margin-top:30px; text-align:center; color:var(--mut); font-size:.85rem; font-weight:700; }
 
   @media (prefers-reduced-motion:reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
+<div class="wc a"></div><div class="wc b"></div><div class="wc c"></div><div class="wc d"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <main>
   <h1 class="sr">WaffleFun</h1>
   <div class="hero">
-    <div class="float"><div class="pop" id="pop"><img class="logo" id="logo" src="logo.png" alt="WaffleFun, un waffle sonriente"></div></div>
+    <div class="float"><div class="pop" id="pop"><img class="logo" id="logo" src="logo.png" alt="WaffleFun, un waffle sonriente"></div></div><br>
     <p class="frase" id="frase">Toca el waffle 👆</p>
   </div>
-  <div id="lista" style="margin-top:22px"></div>
+  <div id="lista" style="margin-top:20px"></div>
   <!-- AGREGAR: aquí puede ir el botón "invítame un café" (Ko-fi) o publicidad -->
   <footer>Hecho con cariño · más juguetes pronto</footer>
 </main>
 <script src="juegos.js"></script>
 <script>
-  const COLS = ['#ffc933', '#2aa3ff', '#ff5b8a', '#9bd13d'];   // CAMBIAR: colores de las bolitas, el confeti y de cada ecosistema
+  const COLS = ['#ffc933', '#2aa3ff', '#ff5b8a', '#9bd13d'];   // CAMBIAR: colores de las chispitas y del confeti
+  // CAMBIAR: orden de las imágenes de botón (los juegos las toman en este orden y, al terminar, vuelven a empezar).
+  // AGREGAR: si haces una imagen nueva, súbela al repositorio y agrega su nombre aquí.
+  const BTNS = ['btn-naranja1.png', 'btn-azul1.png', 'btn-rosado.png', 'btn-verde.png',
+                'btn-azul2.png', 'btn-naranja2.png', 'btn-morado.png', 'btn-turquesa.png'];
   const FRASES = ['¡Hola! 👋', '¡Waffle power! 🧇', '¿Jugamos? 🎮','¡Hola, chef! 👨‍🍳','¡Waffle power! 🧇','¡A jugar! 🎮','¡Dulce aventura! 🍓','¡Qué rico! 😋','¡Modo diversión! 🎉','¡A cocinar! 🍳','¡Más chispitas! 🍫','¡Ñam, ñam! 🤤','¡Waffle fiesta! 🥳','¡Qué locura! 🤪','¡A toda máquina! 🚀','¡Dame cinco! ✋','¡Nivel superado! 🏆','¡Un poquito más! 💪','¡Pura dulzura! 🍯','¡Ups, se quemó! 🔥','¡Hora del recreo! 🎈','¡Qué buena pinta! 😍','¡Sigue jugando! 🕹️','¡Waffle mágico! ✨','¡Cuidado, salpica! 💦','¡Dulce victoria! 🥇','¡Más diversión! 🎊','¡Eres un crack! 😎','¡Hasta el último waffle! 🧇','¡Más sirope! 🍯', '¡Eso cosquillea! 😆'];  // CAMBIAR/AGREGAR: frases al tocar el logo
   const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Tarjetas, dibujadas desde juegos.js (todas juntas, sin mostrar ecosistemas; cada una con un color del logo)
+  // Tarjetas, dibujadas desde juegos.js (todas juntas, sin mostrar ecosistemas)
+  const esImg = s => /\.(png|webp|jpe?g|svg|gif)$/i.test(s || '');
   let k = 0, h = '<div class="grid">';
   ECOSISTEMAS.forEach(g => {
     for (const j of g.juegos) {
-      const st = ' style="--k:' + k + ';--a:' + COLS[k % 4] + '"';
+      const st = ' style="--k:' + k + ';--img:url(' + BTNS[k % BTNS.length] + ')"';
+      const ic = '<span class="em">' + (esImg(j.e) ? '<img src="' + j.e + '" alt="">' : j.e) + '</span>';
       h += j.pronto
-        ? '<div class="card soon"' + st + '><span class="em">' + j.e + '</span>' + j.n + '<small>Próximamente</small></div>'
-        : '<a class="card"' + st + ' href="' + j.u + '"><span class="em">' + j.e + '</span>' + j.n + '</a>';
+        ? '<div class="card soon"' + st + '>' + ic + '<span class="tx">' + j.n + '<small>Próximamente</small></span></div>'
+        : '<a class="card"' + st + ' href="' + j.u + '">' + ic + '<span class="tx">' + j.n + '</span><span class="go">›</span></a>';
       k++;
     }
   });
   document.getElementById('lista').innerHTML = h + '</div>';
 
-  // Bolitas flotando de fondo + confeti
+  // Chispitas flotando de fondo + confeti (palitos de colores, como los sprinkles)
   const cv = document.getElementById('fx'), x = cv.getContext('2d');
   let W, H;
   function rs() { const d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; x.setTransform(d, 0, 0, d, 0, 0); }
   addEventListener('resize', rs); rs();
+  function chispa(px, py, len, ang, col, al) {
+    x.save(); x.translate(px, py); x.rotate(ang); x.globalAlpha = al; x.fillStyle = col;
+    x.beginPath(); x.roundRect(-len / 2, -2.5, len, 5, 2.5); x.fill(); x.restore();
+  }
   const fl = [];
-  for (let i = 0; i < 26; i++) fl.push({ x: Math.random() * W, y: Math.random() * H, r: 3 + Math.random() * 7, v: 10 + Math.random() * 25, c: COLS[i % 4], p: Math.random() * 6 });  // CAMBIAR: 26 = cantidad de bolitas
+  for (let i = 0; i < 26; i++) fl.push({ x: Math.random() * W, y: Math.random() * H, r: 9 + Math.random() * 9, v: 10 + Math.random() * 25, c: COLS[i % 4], p: Math.random() * 6, a: Math.random() * 3 });  // CAMBIAR: 26 = cantidad de chispitas
   let cf = [];
   function loop(t) {
     x.clearRect(0, 0, W, H);
     for (const f of fl) {
       f.y -= f.v * 0.016; f.x += Math.sin(t / 1000 + f.p) * 0.3;
       if (f.y < -10) { f.y = H + 10; f.x = Math.random() * W; }
-      x.globalAlpha = 0.35; x.fillStyle = f.c; x.beginPath(); x.arc(f.x, f.y, f.r, 0, 7); x.fill();
+      chispa(f.x, f.y, f.r, f.a + Math.sin(t / 1500 + f.p) * 0.4, f.c, 0.45);
     }
     cf = cf.filter(p => p.l > 0);
-    for (const p of cf) { p.vy += 0.35; p.x += p.vx; p.y += p.vy; p.l -= 0.012; x.globalAlpha = Math.max(0, p.l); x.fillStyle = p.c; x.fillRect(p.x, p.y, 7, 5); }
+    for (const p of cf) { p.vy += 0.35; p.x += p.vx; p.y += p.vy; p.l -= 0.012; p.a += 0.15; chispa(p.x, p.y, 11, p.a, p.c, Math.max(0, p.l)); }
     x.globalAlpha = 1;
     requestAnimationFrame(loop);
   }
@@ -122,7 +167,7 @@
     frase.textContent = FRASES[fi++ % FRASES.length];
     if (rm) return;
     const r = pop.getBoundingClientRect();
-    for (let i = 0; i < 45; i++) cf.push({ x: r.left + r.width / 2, y: r.top + r.height / 2, vx: (Math.random() - 0.5) * 9, vy: -Math.random() * 9 - 2, l: 1, c: COLS[i % 4] });  // CAMBIAR: 45 = cantidad de confeti
+    for (let i = 0; i < 45; i++) cf.push({ x: r.left + r.width / 2, y: r.top + r.height / 2, vx: (Math.random() - 0.5) * 9, vy: -Math.random() * 9 - 2, l: 1, a: Math.random() * 6, c: COLS[i % 4] });  // CAMBIAR: 45 = cantidad de confeti
   });
 </script>
 </body>
