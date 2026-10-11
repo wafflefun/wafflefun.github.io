@@ -10,6 +10,7 @@
 const BASE = 'https://wafflefun.github.io/';   // CAMBIAR: si algún día tienes dominio propio
 window.ECOSISTEMAS = [
   { nombre: 'Social / Personalidad', emoji: '🎭', juegos: [
+    { n: 'Dulce crush café',        e: '🧇', u: BASE + 'dulcecrushwf/' },
     { n: 'El Gusano',        e: '🐛', u: BASE + 'gusanoloco/' },
     { n: 'Tu nivel de caos', e: '🌀', u: BASE + 'tucaos/' },
     { n: 'Crea tu monstruo', e: '👾', u: BASE + 'tumonstruo/' },
@@ -20,9 +21,9 @@ window.ECOSISTEMAS = [
   { nombre: 'Agilidad / Precisión', emoji: '🎯', juegos: [
     { n: 'No pares el cursor',   e: '🎯', u: BASE + 'noparess/' },
     { n: 'No toques la pared',   e: '🧱', u: BASE + 'ntlp/' },
-    { n: 'Waffle Drop Café',     e: '🧇', u: BASE + 'waffletower/' },   // CAMBIAR: 'waffletower/' = nombre del repo de este juego
-    { n: 'Waffle Launcher', e: '🧇🚀', u: BASE + 'wafflelauncher/' },
-    { n: 'Waffle Chef',e:'👨‍🍳🧇', u:BASE+'wafflechef/'},
+    { n: 'Waffle Drop Café',     e: '🕹', u: BASE + 'waffletower/' },   // CAMBIAR: 'waffletower/' = nombre del repo de este juego
+    { n: 'Waffle Launcher', e: '🚀', u: BASE + 'wafflelauncher/' },
+    { n: 'Waffle Chef',e:'👨‍🍳', u:BASE+'wafflechef/'},
   ]}
   // AGREGAR: un nuevo ecosistema completo aquí (copia uno de arriba)
 ];
